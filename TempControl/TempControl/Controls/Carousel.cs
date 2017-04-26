@@ -8,7 +8,7 @@ namespace TempControl.Controls
     {
         public static readonly DependencyProperty IsLoopEnabledProperty = DependencyProperty.Register(nameof(IsLoopEnabled), typeof(bool), typeof(Carousel), new PropertyMetadata(false, OnIsLoopEnabledChanged));
 
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(Carousel), new PropertyMetadata(Orientation.Horizontal));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(Carousel), new PropertyMetadata(Orientation.Horizontal, OnOrientationChanged));
 
         public Carousel()
         {
@@ -46,6 +46,19 @@ namespace TempControl.Controls
 
         private static void OnIsLoopEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            throw new NotImplementedException();
+        }
+
+        private static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var obj = (Carousel)d;
+            var value = (Orientation)e.NewValue;
+
+            if (Enum.IsDefined(typeof(Orientation), value) == false)
+            {
+                throw new ArgumentOutOfRangeException(nameof(Orientation));
+            }
+
             throw new NotImplementedException();
         }
     }
