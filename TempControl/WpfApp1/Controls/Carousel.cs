@@ -1,8 +1,8 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace TempControl.Controls
+namespace WpfApp1.Controls
 {
     public class Carousel : ItemsControl
     {
@@ -10,9 +10,9 @@ namespace TempControl.Controls
 
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(Carousel), new PropertyMetadata(Orientation.Horizontal, OnOrientationChanged));
 
-        public Carousel()
+        static Carousel()
         {
-            DefaultStyleKey = typeof(Carousel);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Carousel), new FrameworkPropertyMetadata(typeof(Carousel)));
         }
 
         public event SelectionChangedEventHandler SelectionChanged;
@@ -89,6 +89,11 @@ namespace TempControl.Controls
             }
         }
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+        }
+
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new CarouselItem();
@@ -97,11 +102,6 @@ namespace TempControl.Controls
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is CarouselItem;
-        }
-
-        protected override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
         }
 
         private static void OnIsLoopEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
